@@ -12,7 +12,6 @@ setting_memo: the folder name for this experiment
 
 '''
 
-
 import copy
 import json
 import shutil
@@ -28,7 +27,6 @@ import xml.etree.ElementTree as ET
 
 
 class TrafficLightDQN:
-
     DIC_AGENTS = {
         "Deeplight": DeeplightAgent,
     }
@@ -47,6 +45,7 @@ class TrafficLightDQN:
         EXP_CONF = "exp.conf"
         SUMO_AGENT_CONF = "sumo_agent.conf"
         PATH_TO_CFG_TMP = os.path.join("data", "tmp")
+
         # ======================================= conf files ========================================
 
         def __init__(self, path_to_conf, path_to_data, path_to_output, path_to_model):
@@ -142,14 +141,14 @@ class TrafficLightDQN:
             self.para_set.TRAFFIC_FILE)
         for file_name in self.path_set.TRAFFIC_FILE_PRETRAIN:
             shutil.copy(
-                    os.path.join(self.path_set.PATH_TO_DATA, file_name),
-                    os.path.join(self.path_set.PATH_TO_OUTPUT, file_name))
+                os.path.join(self.path_set.PATH_TO_DATA, file_name),
+                os.path.join(self.path_set.PATH_TO_OUTPUT, file_name))
         for file_name in self.path_set.TRAFFIC_FILE:
             shutil.copy(
                 os.path.join(self.path_set.PATH_TO_DATA, file_name),
                 os.path.join(self.path_set.PATH_TO_OUTPUT, file_name))
 
-    def train(self, sumo_cmd_str, if_pretrain, use_average):
+    def train(self, sumo_cmd_str, if_pretrain, use_average, verbose):
 
         if if_pretrain:
             total_run_cnt = self.para_set.RUN_COUNTS_PRETRAIN
@@ -175,11 +174,13 @@ class TrafficLightDQN:
                     print("Terminal occured. Episode end.")
                     s_agent.end_sumo()
                     ind_phase_time += 1
+                    print('=========Current pretain Episode', ind_phase_time, 'total', len(phase_traffic_ratios),
+                          '===========')
                     if ind_phase_time >= len(phase_traffic_ratios):
                         break
 
                     s_agent = SumoAgent(sumo_cmd_str,
-                            self.path_set)
+                                        self.path_set)
                     current_time = s_agent.get_current_time()  # in seconds
 
                 phase_time_now = phase_traffic_ratios[ind_phase_time]
@@ -217,7 +218,8 @@ class TrafficLightDQN:
                             state.cur_phase[0][0],
                             state.next_phase[0][0],
                             reward, repr(q_values))
-            print(memory_str)
+            if verbose:
+                print(memory_str)
             f_memory.write(memory_str + "\n")
             f_memory.close()
             current_time = s_agent.get_current_time()  # in seconds
@@ -235,10 +237,9 @@ class TrafficLightDQN:
         print("END")
 
 
-def main(memo, f_prefix, sumo_cmd_str, sumo_cmd_pretrain_str):
-
+def main(memo, f_prefix, sumo_cmd_str, sumo_cmd_pretrain_str, verbose):
     player = TrafficLightDQN(memo, f_prefix)
     player.set_traffic_file()
-    player.train(sumo_cmd_pretrain_str, if_pretrain=True, use_average=True)
-    player.train(sumo_cmd_str, if_pretrain=False, use_average=False)
-
+    player.train(sumo_cmd_pretrain_str, if_pretrain=True, use_average=True, verbose = verbose)
+    print("Pre-train finish, start online training")
+    player.train(sumo_cmd_str, if_pretrain=False, use_average=False, verbose = verbose)

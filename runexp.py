@@ -79,6 +79,13 @@ for model_name in list_model_name:
             dic_exp["RUN_COUNTS"] = 72000
         elif "synthetic" in traffic_file[0]:
             dic_exp["RUN_COUNTS"] = 216000
+
+        #####
+        # change config
+        dic_exp['RUN_COUNTS_PRETRAIN'] = 1000 # 10000
+
+        ####
+
         json.dump(dic_exp, open(os.path.join(PATH_TO_CONF, "exp.conf"), "w"), indent=4)
 
         # change MIN_ACTION_TIME correspondingly
@@ -97,7 +104,7 @@ for model_name in list_model_name:
             time.strftime('%m_%d_%H_%M_%S_', time.localtime(time.time())) + "seed_%d" % SEED
         )
 
-        traffic_light_dqn.main(memo=setting_memo, f_prefix=prefix, sumo_cmd_str=sumoCmd_nogui, sumo_cmd_pretrain_str=sumoCmd_nogui_pretrain)
+        traffic_light_dqn.main(memo=setting_memo, f_prefix=prefix, sumo_cmd_str=sumoCmd_nogui, sumo_cmd_pretrain_str=sumoCmd_nogui_pretrain, verbose = False)
 
         print("finished {0}".format(traffic_file))
     print ("finished {0}".format(model_name))
