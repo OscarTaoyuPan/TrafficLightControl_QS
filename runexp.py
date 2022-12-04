@@ -16,12 +16,17 @@ setting_memo = "one_run"
 
 
 # first column: for train, second column: for spre_train
+# list_traffic_files = [
+#     [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]],
+#     [["cross.2phases_rou01_equal_300s.xml"], ["cross.2phases_rou01_equal_300s.xml"]],
+#     [["cross.2phases_rou01_unequal_5_300s.xml"], ["cross.2phases_rou01_unequal_5_300s.xml"]],
+#     [["cross.all_synthetic.rou.xml"], ["cross.all_synthetic.rou.xml"]],
+# ]
+
 list_traffic_files = [
-    [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]],
-    [["cross.2phases_rou01_equal_300s.xml"], ["cross.2phases_rou01_equal_300s.xml"]],
-    [["cross.2phases_rou01_unequal_5_300s.xml"], ["cross.2phases_rou01_unequal_5_300s.xml"]],
-    [["cross.all_synthetic.rou.xml"], ["cross.all_synthetic.rou.xml"]],
+    [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]]
 ]
+
 
 list_model_name = [
                    "Deeplight",
