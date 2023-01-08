@@ -1,0 +1,18 @@
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="hangzhou.net.xml" />
+        <additional-files value="hangzhou.tls.switch.xml, hangzhou.car.type.xml" />
+
+    <route-files value="hangzhou_equal_flow.rou.xml" /></input>
+
+    <processing>
+        <time-to-teleport value="-1" />
+        <ignore-junction-blocker value="1" />
+    </processing>
+    <report>
+        <verbose value="true" />
+        <no-step-log value="true" />
+    </report>
+
+</configuration>

@@ -1,0 +1,2 @@
+Step 1:
+netconvert --node-files=hangzhou.nod.xml --edge-files=hangzhou.edg.xml --type-files=hangzhou.typ.xml --connection-files=hangzhou.con.xml --output-file=hangzhou.net.xml 
