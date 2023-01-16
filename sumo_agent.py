@@ -55,6 +55,10 @@ class SumoAgent:
             os.path.join(self.path_set.PATH_TO_CONF, self.path_set.SUMO_AGENT_CONF),
             os.path.join(self.path_set.PATH_TO_OUTPUT, self.path_set.SUMO_AGENT_CONF))
 
+        if 'hangzhou' in sumo_cmd_str[2]:
+            self.total_num_lanes = 12
+        else:
+            self.total_num_lanes = 12
         map_computor.start_sumo(sumo_cmd_str)
 
         self.dic_vehicles = {}
@@ -148,9 +152,9 @@ class SumoAgent:
         status_tracker = map_computor.status_calculator()
 
         self.state = State(
-            queue_length=np.reshape(np.array(status_tracker[0]), newshape=(1, 12)),
-            num_of_vehicles=np.reshape(np.array(status_tracker[1]), newshape=(1, 12)),
-            waiting_time=np.reshape(np.array(status_tracker[2]), newshape=(1, 12)),
+            queue_length=np.reshape(np.array(status_tracker[0]), newshape=(1, self.total_num_lanes)),
+            num_of_vehicles=np.reshape(np.array(status_tracker[1]), newshape=(1, self.total_num_lanes)),
+            waiting_time=np.reshape(np.array(status_tracker[2]), newshape=(1, self.total_num_lanes)),
             map_feature=np.reshape(np.array(status_tracker[3]), newshape=(1, 150, 150, 1)),
             cur_phase=np.reshape(np.array([self.current_phase]), newshape=(1, 1)),
             next_phase=np.reshape(np.array([(self.current_phase + 1) % len(self.para_set.MIN_PHASE_TIME)]), newshape=(1, 1)),

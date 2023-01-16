@@ -100,8 +100,22 @@ WNG_ESG_EWG_WEG_WSG_ENG = "grrr gGGG grrr gGGG".replace(" ", "")
 NSG_NEG_SNG_SWG_NWG_SEG = "gGGG grrr gGGG grrr".replace(" ", "")
 controlSignal = (WNG_ESG_EWG_WEG_WSG_ENG, NSG_NEG_SNG_SWG_NWG_SEG)
 
+
+
+
+# listLanes=['edge1-0_0','edge1-0_1','edge2-0_0','edge2-0_1',
+#                                  'edge3-0_0','edge3-0_1','edge4-0_0','edge4-0_1']
+#
+# entering_lanes = ['edge1-0_0', 'edge1-0_1', 'edge2-0_0', 'edge2-0_1',
+#                   'edge3-0_0', 'edge3-0_1', 'edge4-0_0', 'edge4-0_1']
+#
+# #
 listLanes=['edge1-0_0','edge1-0_1','edge1-0_2','edge2-0_0','edge2-0_1','edge2-0_2',
                                  'edge3-0_0','edge3-0_1','edge3-0_2','edge4-0_0','edge4-0_1','edge4-0_2']
+
+entering_lanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2',
+                  'edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
+
 '''
 input: phase "NSG_SNG" , four lane number, in the key of W,E,S,N
 output: 
@@ -327,9 +341,7 @@ def log_rewards(vehicle_dict, action, rewards_info_dict, file_name, timestamp,re
     rewards_detail_dict_list.append(reward_detail_dict)
 
 
-def get_rewards_from_sumo(vehicle_dict, action, rewards_info_dict,
-                          listLanes=['edge1-0_0','edge1-0_1','edge1-0_2','edge2-0_0','edge2-0_1','edge2-0_2',
-                                 'edge3-0_0','edge3-0_1','edge3-0_2','edge4-0_0','edge4-0_1','edge4-0_2'],):
+def get_rewards_from_sumo(vehicle_dict, action, rewards_info_dict):
     reward = 0
     import copy
     reward_detail_dict = copy.deepcopy(rewards_info_dict)
@@ -484,8 +496,7 @@ def status_calculator():
 
 def get_vehicle_id_entering():
     vehicle_id_entering = []
-    entering_lanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2',
-                     'edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
+
 
     for lane in entering_lanes:
         vehicle_id_entering.extend(traci.lane.getLastStepVehicleIDs(lane))
@@ -502,31 +513,31 @@ def get_vehicle_id_leaving(vehicle_dict):
     return vehicle_id_leaving
 
 
-
-def get_car_on_red_and_green(cur_phase):
-    listLanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2',
-                 'edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
-    vehicle_red = []
-    vehicle_green = []
-    if cur_phase == 1:
-        red_lanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2']
-        green_lanes = ['edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
-    else:
-        red_lanes = ['edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
-        green_lanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2']
-    for lane in red_lanes:
-        vehicle_red.append(traci.lane.getLastStepVehicleNumber(lane))
-    for lane in green_lanes:
-        vehicle_ids = traci.lane.getLastStepVehicleIDs(lane)
-        omega = 0
-        for vehicle_id in vehicle_ids:
-            traci.vehicle.subscribe(vehicle_id, (tc.VAR_DISTANCE, tc.VAR_LANEPOSITION))
-            distance = traci.vehicle.getSubscriptionResults(vehicle_id).get(132)
-            if distance > 100:
-                omega += 1
-        vehicle_green.append(omega)
-
-    return max(vehicle_red), max(vehicle_green)
+#
+# def get_car_on_red_and_green(cur_phase):
+#     listLanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2',
+#                  'edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
+#     vehicle_red = []
+#     vehicle_green = []
+#     if cur_phase == 1:
+#         red_lanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2']
+#         green_lanes = ['edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
+#     else:
+#         red_lanes = ['edge3-0_0', 'edge3-0_1', 'edge3-0_2', 'edge4-0_0', 'edge4-0_1', 'edge4-0_2']
+#         green_lanes = ['edge1-0_0', 'edge1-0_1', 'edge1-0_2', 'edge2-0_0', 'edge2-0_1', 'edge2-0_2']
+#     for lane in red_lanes:
+#         vehicle_red.append(traci.lane.getLastStepVehicleNumber(lane))
+#     for lane in green_lanes:
+#         vehicle_ids = traci.lane.getLastStepVehicleIDs(lane)
+#         omega = 0
+#         for vehicle_id in vehicle_ids:
+#             traci.vehicle.subscribe(vehicle_id, (tc.VAR_DISTANCE, tc.VAR_LANEPOSITION))
+#             distance = traci.vehicle.getSubscriptionResults(vehicle_id).get(132)
+#             if distance > 100:
+#                 omega += 1
+#         vehicle_green.append(omega)
+#
+#     return max(vehicle_red), max(vehicle_green)
 
 def get_status_img(current_phase,tl_node_id=node_light_7,area_length=600):
     mapOfCars = getMapOfVehicles(area_length=area_length)
@@ -549,7 +560,7 @@ def set_all_red(dic_vehicles,rewards_info_dict,f_log_rewards,rewards_detail_dict
         timestamp = traci.simulation.getCurrentTime()/1000
         traci.trafficlight.setRedYellowGreenState(node_id, Red)
         traci.simulationStep()
-        log_rewards(dic_vehicles, 0, rewards_info_dict, f_log_rewards, timestamp,rewards_detail_dict_list)
+        log_rewards(dic_vehicles, 0, rewards_info_dict, f_log_rewards, timestamp,rewards_detail_dict_list, listLanes)
         update_vehicles_state(dic_vehicles)
 
 def run(action, current_phase, current_phase_duration, vehicle_dict, rewards_info_dict, f_log_rewards, rewards_detail_dict_list,node_id="node0"):

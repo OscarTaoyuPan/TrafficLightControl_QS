@@ -118,7 +118,6 @@ class TrafficLightDQN:
 
     @staticmethod
     def _set_traffic_file(sumo_config_file_tmp_name, sumo_config_file_output_name, list_traffic_file_name):
-
         # update sumocfg
         sumo_cfg = ET.parse(sumo_config_file_tmp_name)
         config_node = sumo_cfg.getroot()
@@ -129,15 +128,15 @@ class TrafficLightDQN:
             ET.Element("route-files", attrib={"value": ",".join(list_traffic_file_name)}))
         sumo_cfg.write(sumo_config_file_output_name)
 
-    def set_traffic_file(self):
+    def set_traffic_file(self, config_prefix):
 
         self._set_traffic_file(
-            os.path.join(self.path_set.PATH_TO_DATA, "cross_pretrain.sumocfg"),
-            os.path.join(self.path_set.PATH_TO_DATA, "cross_pretrain.sumocfg"),
+            os.path.join(self.path_set.PATH_TO_DATA, f"{config_prefix}_pretrain.sumocfg"),
+            os.path.join(self.path_set.PATH_TO_DATA, f"{config_prefix}_pretrain.sumocfg"),
             self.para_set.TRAFFIC_FILE_PRETRAIN)
         self._set_traffic_file(
-            os.path.join(self.path_set.PATH_TO_DATA, "cross.sumocfg"),
-            os.path.join(self.path_set.PATH_TO_DATA, "cross.sumocfg"),
+            os.path.join(self.path_set.PATH_TO_DATA, f"{config_prefix}.sumocfg"),
+            os.path.join(self.path_set.PATH_TO_DATA, f"{config_prefix}.sumocfg"),
             self.para_set.TRAFFIC_FILE)
         for file_name in self.path_set.TRAFFIC_FILE_PRETRAIN:
             shutil.copy(
@@ -239,7 +238,13 @@ class TrafficLightDQN:
 
 def main(memo, f_prefix, sumo_cmd_str, sumo_cmd_pretrain_str, verbose):
     player = TrafficLightDQN(memo, f_prefix)
-    player.set_traffic_file()
+
+    if 'hangzhou' in memo:
+        config_prefix = 'cross'
+    else:
+        config_prefix = 'cross'
+
+    player.set_traffic_file(config_prefix)
     player.train(sumo_cmd_pretrain_str, if_pretrain=True, use_average=True, verbose = verbose)
     print("Pre-train finish, start online training")
     player.train(sumo_cmd_str, if_pretrain=False, use_average=False, verbose = verbose)

@@ -1,10 +1,10 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="hangzhou.net.xml" />
-        <additional-files value="hangzhou.tls.switch.xml, hangzhou.car.type.xml" />
+        <net-file value="cross.net.xml" />
+        <additional-files value="cross.tls.switch.xml, cross.car.type.xml" />
 
-    <route-files value="hangzhou_flow.rou.xml" /></input>
+    <route-files value="cross.hangzhou.rou.xml" /></input>
 
     <processing>
         <time-to-teleport value="-1" />

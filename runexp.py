@@ -12,7 +12,8 @@ Run experiments in batch with configuration
 # ================================= only change these two ========================================
 SEED = 31200
 
-setting_memo = "one_run"
+# setting_memo = "one_run"
+setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes"
 
 
 # first column: for train, second column: for spre_train
@@ -23,8 +24,12 @@ setting_memo = "one_run"
 #     [["cross.all_synthetic.rou.xml"], ["cross.all_synthetic.rou.xml"]],
 # ]
 
+# list_traffic_files = [
+#     [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]],
+# ]
+
 list_traffic_files = [
-    [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]]
+    [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
 ]
 
 
@@ -48,24 +53,30 @@ import time
 
 PATH_TO_CONF = os.path.join("conf", setting_memo)
 
+
+if 'hangzhou' in setting_memo:
+    config_prefix = 'cross'
+else:
+    config_prefix = 'cross'
+
 sumoBinary = r"C:\\Program Files (x86)\\Eclipse\\Sumo\\bin\\sumo-gui.exe"
 sumoCmd = [sumoBinary,
            '-c',
-           r'{0}/data/{1}/cross.sumocfg'.format(os.path.split(os.path.realpath(__file__))[0], setting_memo)]
+           r'{0}/data/{1}/{2}.sumocfg'.format(os.path.split(os.path.realpath(__file__))[0], setting_memo, config_prefix)]
 sumoCmd_pretrain = [sumoBinary,
                     '-c',
-                    r'{0}/data/{1}/cross_pretrain.sumocfg'.format(
-                        os.path.split(os.path.realpath(__file__))[0], setting_memo)]
+                    r'{0}/data/{1}/{2}_pretrain.sumocfg'.format(
+                        os.path.split(os.path.realpath(__file__))[0], setting_memo, config_prefix)]
 
 sumoBinary_nogui = r"C:\\Program Files (x86)\\Eclipse\\Sumo\\bin\\sumo.exe"
 sumoCmd_nogui = [sumoBinary_nogui,
                  '-c',
-                 r'{0}/data/{1}/cross.sumocfg'.format(
-                     os.path.split(os.path.realpath(__file__))[0], setting_memo)]
+                 r'{0}/data/{1}/{2}.sumocfg'.format(
+                     os.path.split(os.path.realpath(__file__))[0], setting_memo, config_prefix)]
 sumoCmd_nogui_pretrain = [sumoBinary_nogui,
                           '-c',
-                          r'{0}/data/{1}/cross_pretrain.sumocfg'.format(
-                              os.path.split(os.path.realpath(__file__))[0], setting_memo)]
+                          r'{0}/data/{1}/{2}_pretrain.sumocfg'.format(
+                              os.path.split(os.path.realpath(__file__))[0], setting_memo, config_prefix)]
 
 for model_name in list_model_name:
     for traffic_file, traffic_file_pretrain in list_traffic_files:
@@ -79,10 +90,13 @@ for model_name in list_model_name:
             dic_exp["RUN_COUNTS"] = 72000
         elif "synthetic" in traffic_file[0]:
             dic_exp["RUN_COUNTS"] = 216000
+        elif "hangzhou" in traffic_file[0]:
+            dic_exp['RUN_COUNTS'] = 72000
+
 
         #####
         # change config
-        dic_exp['RUN_COUNTS_PRETRAIN'] = 1000 # 10000
+        dic_exp['RUN_COUNTS_PRETRAIN'] = 10000 # 10000
 
         ####
 
