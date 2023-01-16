@@ -329,10 +329,13 @@ def restrict_reward(reward,func="unstrict"):
 def log_rewards(vehicle_dict, action, rewards_info_dict, file_name, timestamp,rewards_detail_dict_list):
 
     reward, reward_detail_dict = get_rewards_from_sumo(vehicle_dict, action, rewards_info_dict)
-    list_reward_keys = np.sort(list(reward_detail_dict.keys()))
+    list_reward_keys = np.sort(list(reward_detail_dict.keys()) + ['reward'])
     reward_str = "{0}, {1}".format(timestamp,action)
     for reward_key in list_reward_keys:
-        reward_str = reward_str + ", {0}".format(reward_detail_dict[reward_key][2])
+        if reward_key != 'reward':
+            reward_str = reward_str + ", {0}".format(reward_detail_dict[reward_key][2])
+        else:
+            reward_str = reward_str + ", {0}".format(reward)
     reward_str += '\n'
 
     fp = open(file_name, "a")

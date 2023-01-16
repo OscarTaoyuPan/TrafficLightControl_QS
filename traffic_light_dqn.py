@@ -29,6 +29,7 @@ import xml.etree.ElementTree as ET
 class TrafficLightDQN:
     DIC_AGENTS = {
         "Deeplight": DeeplightAgent,
+        "Fix_signal": DeeplightAgent,
     }
 
     NO_PRETRAIN_AGENTS = []
@@ -234,6 +235,69 @@ class TrafficLightDQN:
             self.agent.update_network_bar()
         self.agent.reset_update_count()
         print("END")
+
+
+
+    def sumo_run_fix_signal(self, sumo_cmd_str, simulation_time, fix_signal, if_pretrain, use_average, verbose):
+
+        total_run_cnt = simulation_time
+        # initialize output streams
+        file_name_memory = os.path.join(self.path_set.PATH_TO_OUTPUT, "memories.txt")
+
+        # start sumo
+        s_agent = SumoAgent(sumo_cmd_str,
+                            self.path_set)
+        current_time = s_agent.get_current_time()  # in seconds
+
+        # start experiment
+        phase_time_now = fix_signal
+        while current_time < total_run_cnt:
+            f_memory = open(file_name_memory, "a")
+            # get state
+            state = s_agent.get_observation()
+            state = self.agent.get_state(state, current_time)
+
+            _, q_values = self.agent.choose(count=current_time, if_pretrain=if_pretrain)
+            if state.time_this_phase[0][0] < phase_time_now[state.cur_phase[0][0]]:
+                action_pred = 0
+            else:
+                action_pred = 1
+
+
+            # get reward from sumo agent
+            reward, action = s_agent.take_action(action_pred)
+
+            # get next state
+            next_state = s_agent.get_observation()
+            next_state = self.agent.get_next_state(next_state, current_time)
+
+            # remember
+            self.agent.remember(state, action, reward, next_state)
+
+            # output to std out and file
+            memory_str = 'time = %d\taction = %d\tcurrent_phase = %d\tnext_phase = %d\treward = %f' \
+                         '\t%s' \
+                         % (current_time, action,
+                            state.cur_phase[0][0],
+                            state.next_phase[0][0],
+                            reward, repr(q_values))
+            if verbose:
+                print(memory_str)
+            f_memory.write(memory_str + "\n")
+            f_memory.close()
+            current_time = s_agent.get_current_time()  # in seconds
+
+
+def run_fixed_signal(memo, f_prefix, sumo_cmd_str, sumo_cmd_pretrain_str, verbose, fix_signal, simulation_time):
+    player = TrafficLightDQN(memo, f_prefix)
+
+    if 'hangzhou' in memo:
+        config_prefix = 'cross'
+    else:
+        config_prefix = 'cross'
+
+    player.set_traffic_file(config_prefix)
+    player.sumo_run_fix_signal(sumo_cmd_pretrain_str, simulation_time, fix_signal, if_pretrain=True, use_average=True, verbose = verbose)
 
 
 def main(memo, f_prefix, sumo_cmd_str, sumo_cmd_pretrain_str, verbose):

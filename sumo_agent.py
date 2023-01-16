@@ -73,7 +73,7 @@ class SumoAgent:
         if not os.path.exists(self.f_log_rewards):
             f = open(self.f_log_rewards, 'w')
             list_reward_keys = np.sort(list(self.para_set.REWARDS_INFO_DICT.keys())+
-                                       ['num_of_vehicles_in_system','num_of_vehicles_at_entering'])
+                                       ['num_of_vehicles_in_system','num_of_vehicles_at_entering'] + ['reward'])
             head_str = "count,action," + ','.join(list_reward_keys) + '\n'
             f.write(head_str)
             f.close()
