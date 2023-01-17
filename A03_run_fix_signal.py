@@ -39,7 +39,7 @@ list_model_name = [
 
 Simulation_time = 7200
 
-FIX_SIGNAL = [20, 20]
+FIX_SIGNAL = [10, 20]  #[phase 0, phase 1]
 
 # ================================= only change these two ========================================
 
@@ -125,7 +125,7 @@ for model_name in list_model_name:
         )
 
         traffic_light_dqn.run_fixed_signal(memo=setting_memo, f_prefix=prefix, sumo_cmd_str=sumoCmd_nogui,
-                                           sumo_cmd_pretrain_str=sumoCmd_nogui_pretrain, verbose = False, fix_signal = FIX_SIGNAL,
+                                           sumo_cmd_pretrain_str=sumoCmd_nogui_pretrain, verbose = True, fix_signal = FIX_SIGNAL,
                                            simulation_time = Simulation_time)
 
         print("finished {0}".format(traffic_file))
