@@ -4,7 +4,7 @@
         <net-file value="cross.net.xml" />
         <additional-files value="cross.tls.switch.xml, cross.car.type.xml" />
 
-    <route-files value="cross.hangzhou.rou.xml" /></input>
+    <route-files value="cross.imbalanced.xml" /></input>
 
     <processing>
         <time-to-teleport value="-1" />

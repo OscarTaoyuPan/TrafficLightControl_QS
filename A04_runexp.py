@@ -16,20 +16,11 @@ SEED = 31200
 setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes"
 
 
-# first column: for train, second column: for spre_train
-# list_traffic_files = [
-#     [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]],
-#     [["cross.2phases_rou01_equal_300s.xml"], ["cross.2phases_rou01_equal_300s.xml"]],
-#     [["cross.2phases_rou01_unequal_5_300s.xml"], ["cross.2phases_rou01_unequal_5_300s.xml"]],
-#     [["cross.all_synthetic.rou.xml"], ["cross.all_synthetic.rou.xml"]],
-# ]
-
-# list_traffic_files = [
-#     [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]],
-# ]
-
 list_traffic_files = [
-    [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
+    # [["cross.balanced.xml"], ["cross.balanced.xml"]],
+    [["cross.imbalanced.xml"], ["cross.imbalanced.xml"]],
+    # [["cross.switch.xml"], ["cross.switch.xml"]],
+    # [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
 ]
 
 
@@ -84,19 +75,20 @@ for model_name in list_model_name:
         dic_exp["MODEL_NAME"] = model_name
         dic_exp["TRAFFIC_FILE"] = traffic_file
         dic_exp["TRAFFIC_FILE_PRETRAIN"] = traffic_file_pretrain
-        if "real" in traffic_file[0]:
-            dic_exp["RUN_COUNTS"] = 86400
-        elif "2phase" in traffic_file[0]:
-            dic_exp["RUN_COUNTS"] = 72000
-        elif "synthetic" in traffic_file[0]:
-            dic_exp["RUN_COUNTS"] = 216000
-        elif "hangzhou" in traffic_file[0]:
-            dic_exp['RUN_COUNTS'] = 72000
+        dic_exp['RUN_COUNTS'] = 72000
+        # if "real" in traffic_file[0]:
+        #     dic_exp["RUN_COUNTS"] = 86400
+        # elif "2phase" in traffic_file[0]:
+        #     dic_exp["RUN_COUNTS"] = 72000
+        # elif "synthetic" in traffic_file[0]:
+        #     dic_exp["RUN_COUNTS"] = 216000
+        # elif "hangzhou" in traffic_file[0]:
+        #     dic_exp['RUN_COUNTS'] = 72000
 
 
         #####
         # change config
-        dic_exp['RUN_COUNTS_PRETRAIN'] = 10000 # 10000
+        dic_exp['RUN_COUNTS_PRETRAIN'] = 10800 # 10000
 
         ####
 

@@ -1,0 +1,6 @@
+Model 1. Fix signal: 
+1) 根据 https://ops.fhwa.dot.gov/publications/signal_timing/03.htm#:~:text=The%20cycle%20length%20is%20determined,the%20cycle%20is%2075%20seconds. 计算四种情况（Balanced, imbalanced...）的fix signal 长度(南北，东西多少秒）。流量数据在：paper里有。 
+2) 使用A03_run_fix_signal.py 看看每个fix signal下的模型表现。需要修改：setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes" -> 四种不同scenario的setting文件（当前这个是杭州的，还需要其他的）Simulation_time = 72000; 结果会放在records里面。3)使用A02_process_reward_log 得到结果。
+
+Model 2. Reinforcement learning:
+1) 

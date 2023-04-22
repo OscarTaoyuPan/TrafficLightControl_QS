@@ -17,10 +17,7 @@ setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes"
 
 
 # first column: for train, second column: for spre_train
-# list_traffic_files = [
-#     [["cross.2phases_rou1_switch_rou0.xml"], ["cross.2phases_rou1_switch_rou0.xml"]],
-#     [["cross.2phases_rou01_equal_300s.xml"], ["cross.2phases_rou01_equal_300s.xml"]],
-#     [["cross.2phases_rou01_unequal_5_300s.xml"], ["cross.2phases_rou01_unequal_5_300s.xml"]],
+
 #     [["cross.all_synthetic.rou.xml"], ["cross.all_synthetic.rou.xml"]],
 # ]
 
@@ -29,15 +26,19 @@ setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes"
 # ]
 
 list_traffic_files = [
-    [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
+    # [["cross.balanced.xml"], ["cross.balanced.xml"]],
+    [["cross.imbalanced.xml"], ["cross.imbalanced.xml"]],
+    # [["cross.switch.xml"], ["cross.switch.xml"]],
+    # [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
 ]
+
 
 
 list_model_name = [
                    "Fix_signal",
                    ]
 
-Simulation_time = 7200
+Simulation_time = 720
 
 FIX_SIGNAL = [10, 20]  #[phase 0, phase 1]
 
