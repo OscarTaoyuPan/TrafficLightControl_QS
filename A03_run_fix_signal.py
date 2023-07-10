@@ -17,16 +17,16 @@ setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes"
 
 
 list_traffic_files = [
-    # [["cross.balanced.xml"], ["cross.balanced.xml"]],
-    [["cross.imbalanced.xml"], ["cross.imbalanced.xml"]],
-    # [["cross.switch.xml"], ["cross.switch.xml"]],
-    # [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
+    #[["cross.balanced.xml"], ["cross.balanced.xml"]],
+    #[["cross.imbalanced.xml"], ["cross.imbalanced.xml"]],
+    [["cross.switch.xml"], ["cross.switch.xml"]],
+    #[["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
 ]
 
 
-Simulation_time = 720
+Simulation_time = 72000
 
-FIX_SIGNAL = [10, 20]  #[1-0 <-> 0-2, 3-0 <-> 0-4]  [WE, NS]
+FIX_SIGNAL = [28, 28]  #[1-0 <-> 0-2, 3-0 <-> 0-4]  [WE, NS]
 
 list_model_name = [
                    "Fix_signal",

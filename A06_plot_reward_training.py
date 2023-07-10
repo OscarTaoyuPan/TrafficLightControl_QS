@@ -30,7 +30,7 @@ def read_log(model_file_name, case_name):
 
 if __name__ == '__main__':
     model_file_name = 'hangzhou_1x1_bc-tyc_18041607_1h_3_lanes'
-    case_name = "Deeplight_['cross.imbalanced.xml']_['cross.imbalanced.xml']_05_21_12_56_13_seed_31200"
+    case_name = "Deeplight_['cross.switch.xml']_['cross.switch.xml']_07_07_14_11_40_seed_31200"
     # case_name = "Fix_signal_['cross.hangzhou.rou.xml']_['cross.hangzhou.rou.xml']_04_22_08_26_48_seed_31200"
     log_df = read_log(model_file_name, case_name)
     data = process_data(log_df)

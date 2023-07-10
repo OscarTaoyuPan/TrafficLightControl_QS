@@ -17,10 +17,10 @@ setting_memo = "hangzhou_1x1_bc-tyc_18041607_1h_3_lanes"
 
 
 list_traffic_files = [
-    # [["cross.balanced.xml"], ["cross.balanced.xml"]],
-    [["cross.imbalanced.xml"], ["cross.imbalanced.xml"]],
-    # [["cross.switch.xml"], ["cross.switch.xml"]],
-    # [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
+    #[["cross.balanced.xml"], ["cross.balanced.xml"]],
+    #[["cross.imbalanced.xml"], ["cross.imbalanced.xml"]],
+    #[["cross.switch.xml"], ["cross.switch.xml"]],
+    [["cross.hangzhou.rou.xml"], ["cross.hangzhou.rou.xml"]]
 ]
 
 
