@@ -26,6 +26,8 @@ You can find the original code resources at: https://github.com/wingsweihua/Inte
 
 
 ## Environment requirements
+python==3.7.4
+
 See requirements.txt.
 ```
 pip install -r requirements.txt
