@@ -28,5 +28,5 @@ You can find the original code resources at: https://github.com/wingsweihua/Inte
 ## Environment requirements
 See requirements.txt.
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
