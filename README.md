@@ -14,6 +14,7 @@ The codes are referred to:
   organization={ACM}
 }
 ```
+You can find the original code resources at: https://github.com/wingsweihua/IntelliLight
 
 ## Introduction
 
