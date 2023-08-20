@@ -25,3 +25,7 @@ The codes are referred to:
 
 
 ## Environment requirements
+See requirements.txt.
+```
+pip install requirements.txt
+```
