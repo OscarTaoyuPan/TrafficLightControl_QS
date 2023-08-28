@@ -1,7 +1,0 @@
-1. python: https://www.python.org/downloads/release/python-374/
-2. git bash: https://gitforwindows.org/
-3. download git hub code: 
-   a. CD to Yau folder 
-   b. git clone https://github.com/OscarTaoyuPan/TrafficLightControl_QS.git
-4. pkg list: python -m pip install -r requirements.txt
-5. sumo 1.15.0: https://sumo.dlr.de/releases/1.15.0/
