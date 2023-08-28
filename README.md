@@ -19,7 +19,7 @@ You can find the original code resources at: https://github.com/wingsweihua/Inte
 ## Introduction
 Traffic light control is important for reducing congestion in urban mobility systems.  This paper proposes a real-time traffic light control method using deep Q-learning. Our approach incorporates a reward function considering queue lengths, delays, travel time, and throughput. More details can be in our paper:
 ```
-@inproceedings{wei2018intellilight,
+@inproceedings{pan2023traffic,
   title={Traffic Light Control with Reinforcement Learning},
   author={Pan, Taoyu}
 }
@@ -31,6 +31,7 @@ The data is avaiable in /data. The traffic flow data is encoded in cross.imbalan
 
 ## Codes
 A03_run_fix_signal.py: Run fixed signal control for different scenarios.
+
 A04_runexp.py: Run reinforcement learning algorithm for different scenarios.
 
 ## Environment requirements
